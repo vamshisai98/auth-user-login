@@ -187,7 +187,7 @@ app.post('/forgetpassword', async (req, res) => {
                 port: 587,
                 secure: false, // true for 465, false for other ports
                 auth: {
-                    user: 'vamshianirudhtest@gmail.com', // generated ethereal user
+                    user: process.env.USER_SENDER, // generated ethereal user
                     pass: process.env.PWD, // generated ethereal password
                 },
             });
@@ -195,8 +195,8 @@ app.post('/forgetpassword', async (req, res) => {
 
             // send mail with defined transport object
             let info = await transporter.sendMail({
-                from: 'vamshianirudhtest@gmail.com', // sender address
-                to: 'saivamshianirudh136@gmail.com', // list of receivers
+                from: process.env.USER_SENDER, // sender address
+                to: req.body.email, // list of receivers
                 subject: "Reset Password", // Subject line
                 text: "Reset Password", // plain text body
                 html: `<b>Click on the link to reset your password <a href="https://user-login-auth-node.herokuapp.com/authenticate/${randomString}/">Click here</a></b>`, // html body
