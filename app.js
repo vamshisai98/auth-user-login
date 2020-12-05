@@ -237,7 +237,7 @@ app.get('/authenticate/:randomString', async (req, res) => {
         if(result){
 
             if (result.randomstring == req.params.randomString) {
-                res.redirect(`http://localhost:8000/frontend/test.html?randomstring=${req.params.randomString}`)
+                res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
             } 
         }
         else{
