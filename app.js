@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express')
 const mongodb = require('mongodb')
 const cors = require('cors')
@@ -8,7 +9,6 @@ const mongoClient = mongodb.MongoClient
 const objectId = mongodb.ObjectID
 const nodemailer = require("nodemailer");
 const app = express()
-require("dotenv").config();
 app.use(express.json())
 app.use(cors())
 
@@ -237,7 +237,10 @@ app.get('/authenticate/:randomString', async (req, res) => {
         if(result){
 
             if (result.randomstring == req.params.randomString) {
-                res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
+                // res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
+                res.status(200).json({
+                    message: "user exists, Please check your mail"
+                })
             } 
         }
         else{
