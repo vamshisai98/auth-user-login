@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000
 const mongoClient = mongodb.MongoClient
 const objectId = mongodb.ObjectID
 const nodemailer = require("nodemailer");
-const sendgridAPIKey = process.env.SENDGRID_API_KEY
+constsendgridAPIKey= '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'
 
 const app = express()
 
@@ -190,6 +190,7 @@ app.post('/forgetpassword', async (req, res) => {
         if (result) {
             let randomString = (Math.random() * 1e32).toString(36)
             sgMail.setApiKey(sendgridAPIKey)
+
             sgMail.send({
                 to:'req.body.email',
                 from:'process.env.USER_SENDER',
