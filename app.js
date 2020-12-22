@@ -196,8 +196,8 @@ app.post('/forgetpassword', async (req, res) => {
                 from:process.env.USER_SENDER,
                 subject: "Reset Password", // Subject line
                     text: "Reset Password", // plain text body
-                    html: `<b>Click on the link to reset your password <a href="https://user-login-auth-node.herokuapp.com/authenticate/${randomString}">Click here</a></b>`, // html body
-            })
+                    html: `<b>Click on the link to reset your password <a href="https://auth-login-node.herokuapp.com/authenticate/${randomString}">Click here</a></b>`, // html body
+            }) 
             // let transporter = nodemailer.createTransport({
             //     host: "smtp.gmail.com",
             //     port: 587,
@@ -253,10 +253,10 @@ app.get('/authenticate/:randomString', async (req, res) => {
         if(result){
 
             if (result.randomstring == req.params.randomString) {
-                // res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
-                res.status(200).json({
-                    message: "user exists, Please check your mail"
-                })
+                res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
+                // res.status(200).json({
+                //     message: "user exists, Please check your mail"
+                // })
             } 
         }
         else{
