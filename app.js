@@ -9,10 +9,11 @@ const port = process.env.PORT || 3000
 const mongoClient = mongodb.MongoClient
 const objectId = mongodb.ObjectID
 const nodemailer = require("nodemailer");
-const app = express()
 const sendgridAPIKey = process.env.SENDGRID_API_KEY
 
-sgMail.setApiKey(sendgridAPIKey)
+const app = express()
+
+
 
 
 app.use(express.json())
@@ -178,7 +179,7 @@ app.post('/login', async (req, res) => {
 
 
 app.post('/forgetpassword', async (req, res) => {
-
+    
     try {
         let clientInfo = await mongoClient.connect(dbURL)
         let db = clientInfo.db("student-mentor-details")
@@ -188,6 +189,7 @@ app.post('/forgetpassword', async (req, res) => {
 
         if (result) {
             let randomString = (Math.random() * 1e32).toString(36)
+            sgMail.setApiKey(sendgridAPIKey)
             sgMail.send({
                 to:'req.body.email',
                 from:'process.env.USER_SENDER',
