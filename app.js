@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000
 const mongoClient = mongodb.MongoClient
 const objectId = mongodb.ObjectID
 const nodemailer = require("nodemailer");
-constsendgridAPIKey= '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'
+const sendgridAPIKey= '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'
 
 const app = express()
 
