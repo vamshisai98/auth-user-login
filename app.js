@@ -3,12 +3,18 @@ const express = require('express')
 const mongodb = require('mongodb')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
+const sgMail = require('@sendgrid/mail')
 const port = process.env.PORT || 3000
 
 const mongoClient = mongodb.MongoClient
 const objectId = mongodb.ObjectID
 const nodemailer = require("nodemailer");
 const app = express()
+const sendgridAPIKey = process.env.SENDGRID_API_KEY
+
+sgMail.setApiKey(sendgridAPIKey)
+
+
 app.use(express.json())
 app.use(cors())
 
@@ -182,25 +188,32 @@ app.post('/forgetpassword', async (req, res) => {
 
         if (result) {
             let randomString = (Math.random() * 1e32).toString(36)
-            let transporter = nodemailer.createTransport({
-                host: "smtp.gmail.com",
-                port: 587,
-                secure: false, // true for 465, false for other ports
-                auth: {
-                    user: process.env.USER_SENDER, // generated ethereal user
-                    pass: process.env.PWD, // generated ethereal password
-                },
-            });
-
-
-            // send mail with defined transport object
-            let info = await transporter.sendMail({
-                from: process.env.USER_SENDER, // sender address
-                to: req.body.email, // list of receivers
+            sgMail.send({
+                to:'saivamshianirudh136@gmail.com',
+                from:'vamshianirudhtest@gmail.com',
                 subject: "Reset Password", // Subject line
-                text: "Reset Password", // plain text body
-                html: `<b>Click on the link to reset your password <a href="https://user-login-auth-node.herokuapp.com/authenticate/${randomString}">Click here</a></b>`, // html body
-            });
+                    text: "Reset Password", // plain text body
+                    html: `<b>Click on the link to reset your password <a href="https://user-login-auth-node.herokuapp.com/authenticate/${randomString}">Click here</a></b>`, // html body
+            })
+            // let transporter = nodemailer.createTransport({
+            //     host: "smtp.gmail.com",
+            //     port: 587,
+            //     secure: false, // true for 465, false for other ports
+            //     auth: {
+            //         user: process.env.USER_SENDER, // generated ethereal user
+            //         pass: process.env.PWD, // generated ethereal password
+            //     },
+            // });
+
+
+            // // send mail with defined transport object
+            // let info = await transporter.sendMail({
+            //     from: process.env.USER_SENDER, // sender address
+            //     to: req.body.email, // list of receivers
+            //     subject: "Reset Password", // Subject line
+            //     text: "Reset Password", // plain text body
+            //     html: `<b>Click on the link to reset your password <a href="https://user-login-auth-node.herokuapp.com/authenticate/${randomString}">Click here</a></b>`, // html body
+            // });
 
             await db.collection("users").updateOne({
                 "email": req.body.email
