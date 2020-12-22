@@ -253,10 +253,10 @@ app.get('/authenticate/:randomString', async (req, res) => {
         if(result){
 
             if (result.randomstring == req.params.randomString) {
-                res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
-                // res.status(200).json({
-                //     message: "user exists, Please check your mail"
-                // })
+                // res.redirect(`https://login-authentication.netlify.app/test.html?randomstring=${req.params.randomString}`)
+                res.status(200).json({
+                    message: "user exists, Please check your mail"
+                })
             } 
         }
         else{
