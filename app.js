@@ -192,8 +192,8 @@ app.post('/forgetpassword', async (req, res) => {
             sgMail.setApiKey(sendgridAPIKey)
 
             sgMail.send({
-                to:'req.body.email',
-                from:'process.env.USER_SENDER',
+                to:req.body.email,
+                from:process.env.USER_SENDER,
                 subject: "Reset Password", // Subject line
                     text: "Reset Password", // plain text body
                     html: `<b>Click on the link to reset your password <a href="https://user-login-auth-node.herokuapp.com/authenticate/${randomString}">Click here</a></b>`, // html body
